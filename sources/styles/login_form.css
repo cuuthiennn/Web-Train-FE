@@ -1,0 +1,116 @@
+/*login form*/
+.invalid_login .webix_header>div {
+    background: rgb(2, 0, 36);
+    background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 36%, rgba(0, 212, 255, 1) 100%);
+    transition: background 5s;
+}
+
+.invalid_login {
+    -webkit-animation: formshake .5s linear;
+}
+
+
+@-webkit-keyframes formshake {
+
+    8%,
+    41% {
+        -webkit-transform: translateX(-10px);
+    }
+
+    25%,
+    58% {
+        -webkit-transform: translateX(10px);
+    }
+
+    75% {
+        -webkit-transform: translateX(-5px);
+    }
+
+    92% {
+        -webkit-transform: translateX(5px);
+    }
+
+    0%,
+    100% {
+        -webkit-transform: translateX(0);
+    }
+}
+
+.webix_full_screen {
+    background: rgb(2, 0, 36);
+    background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 36%, rgba(0, 212, 255, 1) 100%);
+}
+
+.app_header.webix_header {
+    text-align: center;
+}
+
+.app_layout.webix_layout_clean {
+    /* background: #EBEDF0;
+     */
+}
+
+.app_start .webix_template {
+    padding: 12px 12px;
+}
+
+.app_menu .webix_icon {
+    font-size: 20px;
+    vertical-align: middle;
+}
+
+.loginBody {
+    background: rgb(35, 191, 246);
+    background: linear-gradient(90deg, rgba(35, 191, 246, 1) 0%, rgba(165, 224, 236, 1) 46%, rgba(120, 211, 241, 1) 96%);
+}
+
+/* Form Login */
+.webix_scroll_cont .formLogin {
+    margin: 0 auto;
+    width: 50%;
+    border-radius: 10%;
+    background-color: rgb(144, 212, 252);
+    height: 60%;
+}
+
+.webix_scroll_cont .formLogin .webix_scroll_cont {
+    border-radius: 5px;
+    background-color: rgb(116, 195, 248);
+    height: 40%;
+}
+
+.webix_scroll_cont_form {
+    padding-top: 15%;
+    padding-left: 35%;
+}
+
+/* Title Label */
+.formLogin .webix_inp_top_label {
+    color: rgb(41, 6, 240);
+    font-size: 20px;
+}
+
+/* Title Form */
+.formLogin .titleFormLogin {
+    text-align: center;
+    font-size: 50px;
+}
+
+.titleFormLogin .webix_el_box {
+    color: rgb(28, 3, 250);
+    font-size: 30px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.box-upload-image{
+    margin: 0 auto;
+    border: none;
+}
+
+.box-upload-image .img-backgroundLogin{
+    width: 100%;
+}
+
+.webix_button {
+    border-radius: 10%;
+}
