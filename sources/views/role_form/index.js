@@ -74,7 +74,7 @@ export default class RoleForm extends JetView {
                             //border: true,
                             borderless: true,
                             autoheight: true,
-                            gradient:"falling",
+                            //gradient:"falling",
                             xAxis: {
                                 template: "#roleName#",
                                 title: "Thống Kê Vai Trò Trong Hệ Thống"
