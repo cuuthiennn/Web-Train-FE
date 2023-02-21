@@ -97,5 +97,13 @@ class services {
         }
     }
 
+    chartBarChangeView = async (item) => {
+        window.location.assign("http://localhost:8081/#!/top/user_list");
+        let { data: result } = await axios.get(`http://localhost:8888/api/user/getUserisUseByRoleName?roleName=${item.roleName}`);
+        console.log(result);
+        $$("datatableUser").clearAll();
+        $$("datatableUser").parse(result);
+    }
+
 }
 export default new services();

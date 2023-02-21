@@ -84,6 +84,11 @@ export default class RoleForm extends JetView {
                             //     end: 10,
                             //     step: 1,
                             // },
+                            on:{
+                                onItemDblClick: function(item){
+                                    services.chartBarChangeView(this.getItem(item));
+                                }
+                            }
                         },
                         {
                             view: "chart",
