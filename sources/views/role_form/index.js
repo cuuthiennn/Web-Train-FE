@@ -64,40 +64,55 @@ export default class RoleForm extends JetView {
                 {
                     cols: [
                         {
-                            view: "chart",
-                            id: "chart_bar",
-                            type: "bar",
-                            value: "#soLuong#",
-                            label:"#soLuong#",
-                            barWidth: 30,
-                            radius: 5,
-                            //border: true,
-                            borderless: true,
-                            autoheight: true,
-                            //gradient:"falling",
-                            xAxis: {
-                                template: "#roleName#",
-                                title: "Thống Kê Vai Trò Trong Hệ Thống"
-                            },
-                            // yAxis: {
-                            //     start: 0,
-                            //     end: 10,
-                            //     step: 1,
-                            // },
-                            on:{
-                                onItemDblClick: function(item){
-                                    services.chartBarChangeView(this.getItem(item));
+                            rows: [
+                                {
+                                    view: "chart",
+                                    id: "chart_bar",
+                                    type: "bar",
+                                    value: "#soLuong#",
+                                    label: "#soLuong#",
+                                    barWidth: 30,
+                                    radius: 5,
+                                    //border: true,
+                                    borderless: true,
+                                    autoheight: true,
+                                    //gradient:"falling",
+                                    xAxis: {
+                                        template: "#roleName#",
+                                    },
+                                    // yAxis: {
+                                    //     start: 0,
+                                    //     end: 10,
+                                    //     step: 1,
+                                    // },
+                                    on: {
+                                        onItemDblClick: function (item) {
+                                            services.chartBarChangeView(this.getItem(item));
+                                        }
+                                    }
+                                },
+                                {
+                                    template: "<div style='width:100%;text-align:center'>Thống Kê Vai Trò Trong Hệ Thống</div>",
+                                    height: 30
                                 }
-                            }
+                            ]
                         },
                         {
-                            view: "chart",
-                            id: "chart_pie3D",
-                            type: "pie3D",
-                            value: "#count#",
-                            pieInnerText: "#count#",
-                            label:"#isUse#",
-                            autoheight: true,
+                            rows: [
+                                {
+                                    view: "chart",
+                                    id: "chart_pie3D",
+                                    type: "pie3D",
+                                    value: "#count#",
+                                    pieInnerText: "#count#",
+                                    label: "#isUse#",
+                                    autoheight: true,
+                                },
+                                {
+                                    template: "<div style='width:100%;text-align:center'>Thống Kê Vai Trò</div>",
+                                    height: 30
+                                }
+                            ]
                         }
                     ]
                 }
