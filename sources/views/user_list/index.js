@@ -84,6 +84,6 @@ export default class UserForm extends JetView {
     }
   };
   init(){
-    
+    services.onload();
   }
 }

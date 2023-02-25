@@ -19,7 +19,8 @@ export default class TopView extends JetView {
 				{ value: "Data", id: "data", icon: "wxi-pencil" },
 				{ value: "User List", id: "user_list", icon: "mdi mdi-menu" },
 				{ value: "User Entry", id: "user_entry", icon: "wxi-user" },
-				{ value: "Role", id: "role_form", icon: "mdi mdi-puzzle" }
+				{ value: "Role", id: "role_form", icon: "mdi mdi-puzzle" },
+				{ value: "Poput", id: "poput" }
 			]
 		};
 

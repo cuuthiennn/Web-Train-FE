@@ -1,10 +1,22 @@
 import axios from "axios";
 
 class services {
-    btnExport_click = async () => {
+    onload = async () => {
         $$("datatableUser").clearAll();
         let { data: result } = await axios.get(`http://localhost:8888/api/user/getUserByIsUse?isUse=${'Y'}`);
         $$("datatableUser").parse(result);
+    }
+
+    btnExport_click = async () => {
+        swal("Nhập Tên File:", {
+            content: "input",
+        })
+            .then((result) => {
+                if (result) {
+                    
+                }
+            });
+
     };
 
     btnClear_click = () => {
@@ -20,12 +32,12 @@ class services {
             $$("datatableUser").clearAll();
             this.btnClear_click();
         } else if (userName == '') {
-            let {data: result} = await axios.get(`http://localhost:8888/api/user/getUserisUseByRoleName?roleName=${roleName}`);
+            let { data: result } = await axios.get(`http://localhost:8888/api/user/getUserisUseByRoleName?roleName=${roleName}`);
             $$("datatableUser").clearAll();
             this.btnClear_click();
             $$("datatableUser").parse(result);
-        }else if (userName != '') {
-            let {data: result} = await axios.get(`http://localhost:8888/api/user/getUserByName?tenKh=${userName}`);
+        } else if (userName != '') {
+            let { data: result } = await axios.get(`http://localhost:8888/api/user/getUserByName?tenKh=${userName}`);
             $$("datatableUser").clearAll();
             this.btnClear_click();
             $$("datatableUser").parse(result);
