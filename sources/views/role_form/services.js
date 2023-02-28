@@ -48,7 +48,6 @@ class services {
         $$('roleName1').setValue('');
         $$('isActive').setValue(1);
         $$('description_text').setValue('');
-        $$("btn_delete").hide();
     };
 
     setValueToFormDetail = async (object) => {
@@ -57,10 +56,12 @@ class services {
         $$('description_text').setValue(object.description);
         $$('isActive').setValue(object.isuse === "Y" ? 1 : 0);
         let { data: result } = await axios.get(`http://localhost:8888/api/user/getUserisUseByRoleName?roleName=${object.roleName}`);
+        console.log(result.length);
         if (result.length == 0) {
-            $$("btn_delete").show();
+            $$("btn_delete").enable();
+            
         } else {
-            $$("btn_delete").hide();
+            $$("btn_delete").disable();
         }
     };
 

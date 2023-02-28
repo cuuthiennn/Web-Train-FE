@@ -13,7 +13,10 @@ class services {
         })
             .then((result) => {
                 if (result) {
-                    
+                    // const workbook = new ExcelJS.Workbook();
+                    // workbook.addRow({ id: 1, name: 'John Doe', dob: new Date(1970, 1, 1) });
+                    // workbook.addRow({ id: 2, name: 'Jane Doe', dob: new Date(1965, 1, 7) });
+                    alert(result+".xlsz");
                 }
             });
 

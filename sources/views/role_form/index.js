@@ -1,5 +1,4 @@
 import services from './services.js';
-import "../../styles/login_form.css";
 import { JetView } from "webix-jet";
 
 export default class RoleForm extends JetView {
@@ -23,7 +22,7 @@ export default class RoleForm extends JetView {
                                 { id: "roleId", header: "ID", sort: "text", width: 50 },
                                 { id: "roleName", header: ["Tên Vai Trò", { content: "textFilter" }], fillspace: 1, css: { "text-align": "center" } },
                                 { id: "isuse", header: { text: "Hoạt Động", css: { "text-align": "center" } }, width: 100, css: { "text-align": "center" } },
-                                //{ id: "description", header: "Mô Tả", fillspace: 1 },
+                                { id: "description", header: { text: "Mô Tả", css: { "text-align": "center" } }, fillspace: 1 },
                             ],
                             data: [],
                             on: {
@@ -48,7 +47,7 @@ export default class RoleForm extends JetView {
                                     cols: [
                                         { view: "button", label: "Save", type: "icon", icon: "mdi mdi-download", click: () => services.save() },
                                         { view: "button", label: "Clear", type: "icon", icon: "wxi-close-circle", click: () => services.btnClear_click() },
-                                        { view: "button", id: "btn_delete", type: "icon", icon: "wxi-trash", label: "Delete", hidden: true, click: () => services.btnDelete_click() }
+                                        { view: "button", id: "btn_delete", type: "icon", icon: "wxi-trash", label: "Delete", click: () => services.btnDelete_click() }
                                     ]
                                 }
                             ],
@@ -74,7 +73,6 @@ export default class RoleForm extends JetView {
                                     barWidth: 30,
                                     radius: 5,
                                     //border: true,
-                                    borderless: true,
                                     autoheight: true,
                                     //gradient:"falling",
                                     xAxis: {
@@ -93,7 +91,8 @@ export default class RoleForm extends JetView {
                                 },
                                 {
                                     template: "<div style='width:100%;text-align:center'>Thống Kê Vai Trò Trong Hệ Thống</div>",
-                                    height: 30
+                                    height: 30,
+                                    borderless: true
                                 }
                             ]
                         },
@@ -110,7 +109,8 @@ export default class RoleForm extends JetView {
                                 },
                                 {
                                     template: "<div style='width:100%;text-align:center'>Thống Kê Vai Trò</div>",
-                                    height: 30
+                                    height: 30,
+                                    borderless: true
                                 }
                             ]
                         }
