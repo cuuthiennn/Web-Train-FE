@@ -17,13 +17,14 @@ export default class UserForm extends JetView {
                     height: 656,
                     width: 650,
                     type: {
-                        template: "<div id='template'><img class='fit-picture' src='img/user.png'/><div id='tenKh' value='#tenKh#'>#tenKh#<div id='maKh' value='#maKh#''>Mã khách hàng: #maKh#</div><div id='isUse' value='#isUse#'>IsActive: #isUse#</div></div><div id='diaChi' value='#diaChi#'></div><div id='mail' value='#mail#'></div><div id='phone' value='#phone#'></div><div id='image' value='#image#'></div><div id='birthday' value='#birthday#'></div><div id='roleId' value='#roleId#'></div><div id='roleName' value='#roleName#'></div></div>",
+                        template: "<div id='template'><img class='image' src='../../../img/#image#'/><div id='tenKh' value='#tenKh#'>#tenKh#<div id='maKh' value='#maKh#''>Mã khách hàng: #maKh#</div><div id='isUse' value='#isUse#'>IsActive: #isUse#</div></div><div id='diaChi' value='#diaChi#'></div><div id='mail' value='#mail#'></div><div id='phone' value='#phone#'></div><div id='image' value='#image#'></div><div id='birthday' value='#birthday#'></div><div id='roleId' value='#roleId#'></div><div id='roleName' value='#roleName#'></div></div>",
                         width: 150,
                         height: 220,
                     },
                     on: {
                         onItemDblClick: function (id) {
                             services.setValueIntoForm(this.getItem(id))
+                            console.table(this.getItem(id))
                         }
                     },
                 },
@@ -37,7 +38,8 @@ export default class UserForm extends JetView {
                             borderless: true,
                             elements: [
                                 { view: "text", id: "userName", name: "tenKh", label: "Fist name", required: true, inputWidth: 399, labelWidth: 100 },
-                                { view: "text", id: "userId", name: "maKh", label: "ID User", inputWidth: 399, labelWidth: 100, value: "Read Only!", hidden: true },
+                                { view: "text", id: "userId", name: "maKh",value: "Read Only!", hidden: true },
+                                { view: "text", id: "userImage", name: "image", hidden: true },
                                 { view: "text", id: "userMail", name: "mail", label: "Mail", required: true, inputWidth: 399, labelWidth: 100 },
                                 { view: "text", id: "userAddress", name: "diaChi", label: "Address", required: true, inputWidth: 399, labelWidth: 100 },
                                 { view: "text", id: "userPhone", name: "phone", label: "Phone", required: true, inputWidth: 399, labelWidth: 100 },
@@ -70,25 +72,51 @@ export default class UserForm extends JetView {
                             ]
                         },
                         {
-                            view:"form",
+                            view: "form",
                             borderless: true,
                             width: 200,
-                            rows: [
-                                {
-                                    view: "template",
-                                    template: "<img class='fit-picture' src='img/user.png'/>",
-                                    height: 200,
-                                    borderless: true,
-                                },
-                                { 
-                                  view: "uploader",
-                                  value: "Upload", 
-                                  name:"files",
-                                  directory: true,
-                                  autosend: true,
-                                  accept:"image/jpeg, image/png",
-                                },
-                              ]
+                                    rows: [
+                                        {
+                                            view: "dataview",
+                                            id: "imageForm",
+                                            template: `<img src='../../../img/#image#'>`,
+                                            height: 140,
+                                            width: 200,
+                                            borderless: true,
+                                            align: "center,middle",
+                                            scroll: false,
+                                            type: {  // dimensions of each dataview item
+                                                height: 300,
+                                                width: 250
+                                            },
+                                        },
+                                        {
+                                            view: "uploader", value: "Upload file", id: "uploader",
+                                            name: "files",
+                                            link: "list1",
+                                            upload: "https://docs.webix.com/samples/server/upload",
+                                        },
+                                        {
+                                            view: "list",
+                                            id: "list1",
+                                            type: "uploader",
+                                            autoheight: true,
+                                            borderless: true
+                                        },
+                                        {
+                                            view: "button", label: "Get Image", click: function () {
+                                                var file_id = $$("uploader").files.getFirstId(); // getting the ID
+                                                var avatar = $$("uploader").files.getItem(file_id).name; // getting properties
+                                                var k = {
+                                                    image: avatar
+                                                }
+                                                $$("userImage").setValue(avatar);
+                                                avatar = JSON.stringify(k);
+                                                $$("imageForm").parse(avatar);
+                                            }
+                                        },
+                                        
+                                    ]
                         }
                     ]
                 }
