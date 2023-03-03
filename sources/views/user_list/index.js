@@ -3,6 +3,39 @@ import { JetView } from "webix-jet";
 import "../../styles/login_form.css";
 import services from "./services";
 
+let popup = webix.ui({
+  view: "window",
+  id: "popup_userList",
+  position: "top",
+  // maxWidth: 800,
+  // maxHeight: 450,
+  width:500,
+  height:350,
+  // move: true,
+  // resize: true,
+  head: {
+    view: "toolbar",
+    cols: [
+      {},
+      { view: 'label', label: "ROLE" },
+      {
+        view: "button",
+        type: "icon",
+        icon: "wxi-close",
+        width: 20,
+        align: "right",
+        click: function () {
+          $$('popup_userList').hide();
+        }
+      }
+    ],
+  },
+  body: {
+    
+  },
+  select: true
+})
+
 export default class UserForm extends JetView {
   config() {
     return {
@@ -32,13 +65,17 @@ export default class UserForm extends JetView {
                           view: "richselect", label: 'Role', name: "roleId", id: 'src_roleId', labelPosition: "top",
                           options: "http://localhost:8888/api/role/getRoleIdIsUse",
                           on: {
-                            onChange: function(){
-                                services.slc_roleName( $$("src_roleId").getValue());
+                            onChange: function () {
+                              services.slc_roleName($$("src_roleId").getValue());
                             }
-                        }
+                          }
                         },
                         { view: "text", label: 'Role Name', name: "roleName", id: 'src_roleName', labelPosition: "top", readonly: true },
-                        //{ view: "button", type: "icon", icon: "wxi-search", width:50, click: function () { } }
+                        {
+                          view: "button", type: "icon", icon: "wxi-search", width: 30, click: function () {
+                            popup.show();
+                          }
+                        }
                       ]
                     },
                     {
@@ -83,7 +120,7 @@ export default class UserForm extends JetView {
 
     }
   };
-  init(){
+  init() {
     services.onload();
   }
 }

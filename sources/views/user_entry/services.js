@@ -3,7 +3,6 @@ class services {
     onload = async () => {
         let { data: result } = await axios.get("http://localhost:8888/api/user/getAllUser");
         $$('datatableUser').parse(result);
-        
     }
     setValueIntoForm = async (obj) => {
         $$("userName").setValue(obj.tenKh);
@@ -15,7 +14,13 @@ class services {
         $$("roleId").setValue(obj.roleId);
         $$("roleName").setValue(obj.roleName);
         $$("isActive").setValue(obj.isUse === "Y" ? 1 : 0);
-        
+        $$("userImage").setValue(obj.image);
+        let avatar = {
+            image: $$("userImage").getValue()
+        }
+        $$("imageForm").clearAll();
+        $$("imageForm").parse(avatar);
+
     }
     btnSave_click = async () => {
         let data = {
@@ -28,7 +33,7 @@ class services {
             isUse: $$("isActive").getValue() === 1 ? "Y" : "N",
             roleId: $$("roleId").getValue(),
             roleName: $$("roleName").getValue(),
-            image: ""
+            image: $$("userImage").getValue(),
         }
 
         console.log(data);
@@ -64,6 +69,7 @@ class services {
         $$("roleId").setValue('');
         $$("roleName").setValue('');
         $$("isActive").setValue(1);
+        $$("imageForm").clearAll();
     }
     btnDelete_click = () => {
         let maKh = $$("userId").getValue();
