@@ -5,6 +5,7 @@ class services {
         $$("datatableUser").clearAll();
         let { data: result } = await axios.get(`http://localhost:8888/api/user/getUserByIsUse?isUse=${'Y'}`);
         $$("datatableUser").parse(result);
+        this.popup_data();
     }
 
     btnExport_click = async () => {
@@ -16,7 +17,7 @@ class services {
                     // const workbook = new ExcelJS.Workbook();
                     // workbook.addRow({ id: 1, name: 'John Doe', dob: new Date(1970, 1, 1) });
                     // workbook.addRow({ id: 2, name: 'Jane Doe', dob: new Date(1965, 1, 7) });
-                    alert(result+".xlsz");
+                    alert(result + ".xlsz");
                 }
             });
 
@@ -47,12 +48,6 @@ class services {
         }
     }
 
-    getRoleId = async () => {
-        let { data: result } = await axios.get("http://localhost:8888/api/role/getRoleIdIsUse");
-        return result;
-
-    }
-
     slc_roleName = async (value) => {
         let { data: result } = await axios.get("http://localhost:8888/api/role/getAllRole");
         for (let i = 0; i < result.length; i++) {
@@ -63,6 +58,11 @@ class services {
                 $$("src_roleName").setValue('');
             }
         }
+    }
+    
+    popup_data = async () => {
+        let {data : result} = await axios.get("http://localhost:8888/api/role/getRoleIdIsUse");
+        return result;
     }
 }
 export default new services();

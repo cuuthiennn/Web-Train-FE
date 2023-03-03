@@ -35,8 +35,6 @@ class services {
             roleName: $$("roleName").getValue(),
             image: $$("userImage").getValue(),
         }
-
-        console.log(data);
         if (data.tenKh != '') {
             let { data: response } = await axios.post("http://localhost:8888/api/user/saveOrUpdateUser", data);
             if (response.success) {

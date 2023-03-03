@@ -24,7 +24,6 @@ export default class UserForm extends JetView {
                     on: {
                         onItemDblClick: function (id) {
                             services.setValueIntoForm(this.getItem(id))
-                            console.table(this.getItem(id))
                         }
                     },
                 },
@@ -38,7 +37,7 @@ export default class UserForm extends JetView {
                             borderless: true,
                             elements: [
                                 { view: "text", id: "userName", name: "tenKh", label: "Fist name", required: true, inputWidth: 399, labelWidth: 100 },
-                                { view: "text", id: "userId", name: "maKh",value: "Read Only!", hidden: true },
+                                { view: "text", id: "userId", name: "maKh", value: "Read Only!", hidden: true },
                                 { view: "text", id: "userImage", name: "image", hidden: true },
                                 { view: "text", id: "userMail", name: "mail", label: "Mail", required: true, inputWidth: 399, labelWidth: 100 },
                                 { view: "text", id: "userAddress", name: "diaChi", label: "Address", required: true, inputWidth: 399, labelWidth: 100 },
@@ -75,48 +74,53 @@ export default class UserForm extends JetView {
                             view: "form",
                             borderless: true,
                             width: 200,
-                                    rows: [
-                                        {
-                                            view: "dataview",
-                                            id: "imageForm",
-                                            template: `<img src='../../../img/#image#'>`,
-                                            height: 140,
-                                            width: 200,
-                                            borderless: true,
-                                            align: "center,middle",
-                                            scroll: false,
-                                            type: {  // dimensions of each dataview item
-                                                height: 300,
-                                                width: 250
-                                            },
-                                        },
-                                        {
-                                            view: "uploader", value: "Upload file", id: "uploader",
-                                            name: "files",
-                                            link: "list1",
-                                            upload: "https://docs.webix.com/samples/server/upload",
-                                        },
-                                        {
-                                            view: "list",
-                                            id: "list1",
-                                            type: "uploader",
-                                            autoheight: true,
-                                            borderless: true
-                                        },
-                                        {
-                                            view: "button", label: "Get Image", click: function () {
-                                                var file_id = $$("uploader").files.getFirstId(); // getting the ID
-                                                var avatar = $$("uploader").files.getItem(file_id).name; // getting properties
-                                                var k = {
-                                                    image: avatar
-                                                }
-                                                $$("userImage").setValue(avatar);
-                                                avatar = JSON.stringify(k);
-                                                $$("imageForm").parse(avatar);
-                                            }
-                                        },
-                                        
-                                    ]
+                            rows: [
+                                {
+                                    view: "dataview",
+                                    id: "imageForm",
+                                    template: `<img src='../../../img/#image#'>`,
+                                    height: 140,
+                                    width: 200,
+                                    borderless: true,
+                                    align: "center,middle",
+                                    scroll: false,
+                                    type: {  // dimensions of each dataview item
+                                        height: 300,
+                                        width: 250
+                                    },
+                                },
+                                {
+                                    view: "uploader",
+                                    value: "Upload file",
+                                    id: "uploader",
+                                    name: "files",
+                                    link: "list1",
+                                    upload: "https://docs.webix.com/samples/server/upload"
+                                },
+                                {
+                                    view: "list",
+                                    id: "list1",
+                                    type: "uploader",
+                                    autoheight: true,
+                                    borderless: true
+                                },
+                                {
+                                    view: "button",
+                                    label: "Get Image",
+                                    click: function () {
+                                        $$('imageForm').clearAll()
+                                        var file_id = $$("uploader").files.getFirstId(); // getting the ID
+                                        var avatar = $$("uploader").files.getItem(file_id).name; // getting properties
+                                        var k = {
+                                            image: avatar
+                                        }
+                                        $$("userImage").setValue(avatar);
+                                        avatar = JSON.stringify(k);
+                                        $$("imageForm").parse(avatar);
+                                    }
+                                },
+
+                            ]
                         }
                     ]
                 }
