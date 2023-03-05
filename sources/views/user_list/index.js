@@ -8,6 +8,7 @@ let popup = webix.ui({
   view: "window",
   id: "popup_userList",
   position: "top",
+  modal: true,
   autowidth: true,
   autoheight: true,
   move: true,
@@ -23,6 +24,7 @@ let popup = webix.ui({
         align: "right",
         click: function () {
           $$('popup_userList').hide();
+          services.popup_data();
         }
       }
     ],
@@ -33,10 +35,10 @@ let popup = webix.ui({
     scrollX: false,
     columns: [
       { id: "checkBox", header: '', checkValue: 'on', uncheckValue: 'off', template: "{common.checkbox()}", width: 40, },
-      { id: "roleId", name: "roleId", sort: "string", header: "Film title", fillspace: 1 },
-      { id: "roleName", name: "roleName", editor: "text", header: "Released", fillspace: 1 },
+      { id: "roleId", name: "roleId", sort: "string", header: "RoleId", fillspace: 1 },
+      { id: "roleName", name: "roleName", editor: "text", header: "RoleName", fillspace: 1 },
     ],
-    data: services.popup_data(),
+    //data: services.popup_data(),
     on: {
       onDataUpdate: function (id) {
         services.checkBox_setValue(this.getItem(id));
@@ -75,6 +77,7 @@ export default class UserForm extends JetView {
                         { view: "text", label: 'Role Name', name: "roleName", id: 'src_roleName', labelPosition: "top", readonly: true },
                         {
                           view: "button", type: "icon", icon: "wxi-search", width: 30, click: function () {
+                            services.popup_data();
                             popup.show();
                           }
                         }
