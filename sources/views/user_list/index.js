@@ -1,3 +1,4 @@
+import axios from "axios";
 import { options } from "less";
 import { JetView } from "webix-jet";
 import "../../styles/login_form.css";
@@ -7,22 +8,18 @@ let popup = webix.ui({
   view: "window",
   id: "popup_userList",
   position: "top",
-  // maxWidth: 800,
-  // maxHeight: 450,
-  width:500,
-  height:350,
-  // move: true,
-  // resize: true,
+  autowidth: true,
+  autoheight: true,
+  move: true,
   head: {
     view: "toolbar",
     cols: [
-      {},
-      { view: 'label', label: "ROLE" },
+      { view: 'label', label: "Select Role" },
       {
         view: "button",
         type: "icon",
         icon: "wxi-close",
-        width: 20,
+        width: 30,
         align: "right",
         click: function () {
           $$('popup_userList').hide();
@@ -31,9 +28,22 @@ let popup = webix.ui({
     ],
   },
   body: {
-    
+    view: "datatable",
+    id: "formSearchRole",
+    scrollX: false,
+    columns: [
+      { id: "checkBox", header: '', checkValue: 'on', uncheckValue: 'off', template: "{common.checkbox()}", width: 40, },
+      { id: "roleId", name: "roleId", sort: "string", header: "Film title", fillspace: 1 },
+      { id: "roleName", name: "roleName", editor: "text", header: "Released", fillspace: 1 },
+    ],
+    data: services.popup_data(),
+    on: {
+      onDataUpdate: function (id) {
+        services.checkBox_setValue(this.getItem(id));
+      }
+    }
   },
-  select: true
+  select: true,
 })
 
 export default class UserForm extends JetView {
@@ -61,15 +71,7 @@ export default class UserForm extends JetView {
                     },
                     {
                       cols: [
-                        {
-                          view: "richselect", label: 'Role', name: "roleId", id: 'src_roleId', labelPosition: "top",
-                          options: "http://localhost:8888/api/role/getRoleIdIsUse",
-                          on: {
-                            onChange: function () {
-                              services.slc_roleName($$("src_roleId").getValue());
-                            }
-                          }
-                        },
+                        { view: "text", label: 'Role', name: "roleId", id: 'src_roleId', labelPosition: "top", readonly: true },
                         { view: "text", label: 'Role Name', name: "roleName", id: 'src_roleName', labelPosition: "top", readonly: true },
                         {
                           view: "button", type: "icon", icon: "wxi-search", width: 30, click: function () {
