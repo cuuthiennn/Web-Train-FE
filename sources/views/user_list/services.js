@@ -5,7 +5,8 @@ class services {
         $$("datatableUser").clearAll();
         let { data: result } = await axios.get(`http://localhost:8888/api/user/getUserByIsUse?isUse=Y`);
         $$("datatableUser").parse(result);
-        this.popup_data();
+        let { data: result1 } = await axios.get("http://localhost:8888/api/role/getRoleIdIsUse");
+
     }
 
     btnExport_click = async () => {
@@ -76,8 +77,9 @@ class services {
     }
 
     popup_data = async () => {
+        $$("formSearchRole").clearAll();
         let { data: result } = await axios.get("http://localhost:8888/api/role/getRoleIdIsUse");
-        return result;
+        $$("formSearchRole").parse(result);
     }
 }
 export default new services();
