@@ -9,18 +9,28 @@ class services {
     }
 
     btnExport_click = async () => {
-        swal("Nhập Tên File:", {
-            content: "input",
+        let nameUser = $$('src_tenKhachHang').getValue().toUpperCase();
+        let array_id = $$("src_roleId").getValue();
+        axios({
+            url: `http://localhost:8888/api/user/exportExcelUserList?tenKh=${nameUser}&arrayId=${array_id}`,
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                'Content-Disposition': 'filename=User.xlsx'
+            },
+            responseType: 'blob',
+        }).then((response) => {
+            //tạo url cho data
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            //tạo thẻ <a> để truyền url
+            const link = document.createElement('a');
+            link.href = url;
+            // tạo thuộc tính cho link khi click và chỉ định file sẽ được tải
+            link.setAttribute('download', 'User.xlsx');
+            document.body.appendChild(link);
+            link.click();
         })
-            .then((result) => {
-                if (result) {
-                    // const workbook = new ExcelJS.Workbook();
-                    // workbook.addRow({ id: 1, name: 'John Doe', dob: new Date(1970, 1, 1) });
-                    // workbook.addRow({ id: 2, name: 'Jane Doe', dob: new Date(1965, 1, 7) });
-                    alert(result + ".xlsz");
-                }
-            });
-
+            .catch((error) => console.log(error));
     };
 
     btnClear_click = () => {
@@ -32,14 +42,10 @@ class services {
     btnSearch_click = async () => {
         let nameUser = $$('src_tenKhachHang').getValue().toUpperCase();
         let array_id = $$("src_roleId").getValue();
-        if (nameUser == '' && array_id == '') {
-            this.onload();
-        } else {
-            $$("datatableUser").clearAll();
-            let { data: result } = await axios.get(`http://localhost:8888/api/user/searchUser?tenKh=${nameUser}&arrayId=${array_id}`);
-            $$("datatableUser").parse(result);
-            this.btnClear_click();  
-        }
+        $$("datatableUser").clearAll();
+        let { data: result } = await axios.get(`http://localhost:8888/api/user/searchUser?tenKh=${nameUser}&arrayId=${array_id}`);
+        $$("datatableUser").parse(result);
+        this.btnClear_click();
     }
 
     checkBox_setValue = (obj) => {
