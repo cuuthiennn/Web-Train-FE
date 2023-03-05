@@ -3,7 +3,7 @@ import axios from "axios";
 class services {
     onload = async () => {
         $$("datatableUser").clearAll();
-        let { data: result } = await axios.get(`http://localhost:8888/api/user/getUserByIsUse?isUse=${'Y'}`);
+        let { data: result } = await axios.get(`http://localhost:8888/api/user/getUserByIsUse?isUse=Y`);
         $$("datatableUser").parse(result);
         this.popup_data();
     }
@@ -30,38 +30,47 @@ class services {
     };
 
     btnSearch_click = async () => {
-        let userName = $$('src_tenKhachHang').getValue();
-        let roleName = $$('src_roleName').getValue();
-        if (userName == '' && roleName == '') {
+        let nameUser = $$('src_tenKhachHang').getValue().toUpperCase();
+        let array_id = $$("src_roleId").getValue();
+        if (nameUser == '' && array_id == '') {
+            this.onload();
+        } else {
             $$("datatableUser").clearAll();
-            this.btnClear_click();
-        } else if (userName == '') {
-            let { data: result } = await axios.get(`http://localhost:8888/api/user/getUserisUseByRoleName?roleName=${roleName}`);
-            $$("datatableUser").clearAll();
-            this.btnClear_click();
+            let { data: result } = await axios.get(`http://localhost:8888/api/user/searchUser?tenKh=${nameUser}&arrayId=${array_id}`);
             $$("datatableUser").parse(result);
-        } else if (userName != '') {
-            let { data: result } = await axios.get(`http://localhost:8888/api/user/getUserByName?tenKh=${userName}`);
-            $$("datatableUser").clearAll();
-            this.btnClear_click();
-            $$("datatableUser").parse(result);
+            this.btnClear_click();  
         }
     }
 
-    slc_roleName = async (value) => {
-        let { data: result } = await axios.get("http://localhost:8888/api/role/getAllRole");
-        for (let i = 0; i < result.length; i++) {
-            if (result[i].roleId == value) {
-                $$("src_roleName").setValue(result[i].roleName);
-                break;
-            } else {
-                $$("src_roleName").setValue('');
+    checkBox_setValue = (obj) => {
+        if (obj.checkBox == 'on') {
+            if ($$("src_roleId").getValue() == '' && $$("src_roleName").getValue() == '') {
+                $$("src_roleId").setValue(obj.roleId);
+                $$("src_roleName").setValue(obj.roleName);
             }
+            else {
+                $$("src_roleId").setValue($$("src_roleId").getValue() + "," + obj.roleId);
+                $$("src_roleName").setValue($$("src_roleName").getValue() + "," + obj.roleName);
+            }
+        } else if (obj.checkBox == 'off') {
+            let array_id = $$("src_roleId").getValue();
+            let array_name = $$("src_roleName").getValue();
+            //convert String to array
+            array_id = array_id.split(",");
+            array_name = array_name.split(",");
+            // remove column 'off'
+            array_id = array_id.filter(item => item != obj.roleId);
+            array_name = array_name.filter(item => item != obj.roleName);
+            // set new value
+            $$('src_roleId').setValue('');
+            $$('src_roleName').setValue('')
+            $$("src_roleId").setValue(array_id.toString());
+            $$("src_roleName").setValue(array_name.toString());
         }
     }
-    
+
     popup_data = async () => {
-        let {data : result} = await axios.get("http://localhost:8888/api/role/getRoleIdIsUse");
+        let { data: result } = await axios.get("http://localhost:8888/api/role/getRoleIdIsUse");
         return result;
     }
 }

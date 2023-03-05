@@ -49,7 +49,7 @@ export default class UserForm extends JetView {
                                     view: "fieldset", id: "userRole", label: "Role", required: true, body: {
                                         cols: [
                                             {
-                                                view: "richselect", id: "roleId", name: "roleId", options: "http://localhost:8888/api/role/getRoleIdIsUse",
+                                                view: "richselect", id: "roleId", name: "roleId", options: "http://localhost:8888/api/role/richSelectData",
                                                 on: {
                                                     onChange: function () {
                                                         services.slc_roleName($$("roleId").getValue());
@@ -95,7 +95,20 @@ export default class UserForm extends JetView {
                                     id: "uploader",
                                     name: "files",
                                     link: "list1",
-                                    upload: "https://docs.webix.com/samples/server/upload"
+                                    upload: "https://docs.webix.com/samples/server/upload",
+                                    on: {
+                                        onFileUpload: function () {
+                                            $$('imageForm').clearAll()
+                                            var file_id = $$("uploader").files.getFirstId(); // getting the ID
+                                            var avatar = $$("uploader").files.getItem(file_id).name; // getting properties
+                                            var k = {
+                                                image: avatar
+                                            }
+                                            $$("userImage").setValue(avatar);
+                                            avatar = JSON.stringify(k);
+                                            $$("imageForm").parse(avatar);
+                                        }
+                                    }
                                 },
                                 {
                                     view: "list",
@@ -104,22 +117,6 @@ export default class UserForm extends JetView {
                                     autoheight: true,
                                     borderless: true
                                 },
-                                {
-                                    view: "button",
-                                    label: "Get Image",
-                                    click: function () {
-                                        $$('imageForm').clearAll()
-                                        var file_id = $$("uploader").files.getFirstId(); // getting the ID
-                                        var avatar = $$("uploader").files.getItem(file_id).name; // getting properties
-                                        var k = {
-                                            image: avatar
-                                        }
-                                        $$("userImage").setValue(avatar);
-                                        avatar = JSON.stringify(k);
-                                        $$("imageForm").parse(avatar);
-                                    }
-                                },
-
                             ]
                         }
                     ]

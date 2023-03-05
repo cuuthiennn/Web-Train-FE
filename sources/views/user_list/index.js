@@ -18,16 +18,6 @@ let popup = webix.ui({
       {
         view: "button",
         type: "icon",
-        icon: "wxi-search",
-        width: 30,
-        align: "right",
-        click: function () {
-
-        }
-      },
-      {
-        view: "button",
-        type: "icon",
         icon: "wxi-close",
         width: 30,
         align: "right",
@@ -42,14 +32,16 @@ let popup = webix.ui({
     id: "formSearchRole",
     scrollX: false,
     columns: [
-      {
-        id: "checkBox", header: { content: "masterCheckbox" }, value: "#roleId#", template: "{common.checkbox()}", width: 40,
-      },
+      { id: "checkBox", header: '', checkValue: 'on', uncheckValue: 'off', template: "{common.checkbox()}", width: 40, },
       { id: "roleId", name: "roleId", sort: "string", header: "Film title", fillspace: 1 },
       { id: "roleName", name: "roleName", editor: "text", header: "Released", fillspace: 1 },
     ],
     data: services.popup_data(),
-    
+    on: {
+      onDataUpdate: function (id) {
+        services.checkBox_setValue(this.getItem(id));
+      }
+    }
   },
   select: true,
 })
@@ -79,7 +71,7 @@ export default class UserForm extends JetView {
                     },
                     {
                       cols: [
-                        { view: "text", label: 'Role', name: "roleId", id: 'src_roleId', labelPosition: "top" },
+                        { view: "text", label: 'Role', name: "roleId", id: 'src_roleId', labelPosition: "top", readonly: true },
                         { view: "text", label: 'Role Name', name: "roleName", id: 'src_roleName', labelPosition: "top", readonly: true },
                         {
                           view: "button", type: "icon", icon: "wxi-search", width: 30, click: function () {
